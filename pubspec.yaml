@@ -38,6 +38,9 @@ dependencies:
 
   # add
   image_picker: ^0.8.9
+  firebase_auth: ^4.6.3
+  firebase_core: ^2.14.0
+  cloud_firestore: ^4.8.1
 
 
 dev_dependencies:
