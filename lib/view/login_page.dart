@@ -38,8 +38,8 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 20,
                 ),
-                const SquareTile(
-                  // onTap: () => AuthGoogle(),
+                SquareTile(
+                  onTap: () => AuthGoogle().signInWithGoogle(context),
                   imagePath: 'images/signin.png',
                 ),
               ],
