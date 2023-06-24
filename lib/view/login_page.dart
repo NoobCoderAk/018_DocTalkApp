@@ -1,6 +1,8 @@
 import 'package:chatapp/controller/auth_google.dart';
 import 'package:flutter/material.dart';
 
+import 'utils/squaretile.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -17,7 +19,7 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             children: [
               SquareTile(
-                onTap: () => AuthGoogle(),
+                // onTap: () => AuthGoogle(),
                 imagePath: 'images/signin.png',
               ),
             ],
