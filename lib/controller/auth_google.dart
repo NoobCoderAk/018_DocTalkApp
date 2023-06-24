@@ -1,1 +1,1 @@
-class AuthController {}
+class AuthGoogle {}
