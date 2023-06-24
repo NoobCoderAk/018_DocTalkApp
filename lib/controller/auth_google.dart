@@ -24,6 +24,12 @@ class AuthGoogle {
 
       final User? user = userCredential.user;
 
+      // Get user id on Firebase collection
+      final DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user!.uid)
+          .get();
+
       // Store data in Firebase collection
       await FirebaseFirestore.instance.collection('users').doc(user!.uid).set({
         'uid': user.uid,
@@ -31,11 +37,19 @@ class AuthGoogle {
         'email': user.email,
       });
 
-      //navigate to the home page
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const HomePage()),
-      );
+      if (userDoc.exists) {
+        // User already exists, navigate to the home page
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const HomePage()),
+        );
+      } else {
+        // User does not exist, navigate to the registration page
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const RegistrationForm()),
+        );
+      }
     } catch (error) {
       print('Error signing in with Google: $error');
       // Handle the error appropriately, e.g., show an error message
@@ -46,5 +60,11 @@ class AuthGoogle {
   Future<void> signOut() async {
     await FirebaseAuth.instance.signOut();
     await GoogleSignIn().signOut();
+  }
+
+  // Verify if user is already signed in
+  Future<bool> isUserSignedIn() async {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    return currentUser != null;
   }
 }
