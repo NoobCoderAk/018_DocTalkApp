@@ -1,6 +1,8 @@
 import 'package:chatapp/view/login_page.dart';
 import 'package:flutter/material.dart';
 
+import '../controller/auth_google.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -24,6 +26,7 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
+                AuthGoogle().signOut();
                 Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(builder: (context) => const LoginPage()),
                   (Route<dynamic> route) => false,

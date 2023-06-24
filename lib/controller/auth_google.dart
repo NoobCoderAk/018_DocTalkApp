@@ -5,6 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../view/home_page.dart';
+
 class AuthGoogle {
   // Google sign in
   Future<void> signInWithGoogle(BuildContext context) async {
@@ -38,5 +40,11 @@ class AuthGoogle {
       print('Error signing in with Google: $error');
       // Handle the error appropriately, e.g., show an error message
     }
+  }
+
+  // Google sign out
+  Future<void> signOut() async {
+    await FirebaseAuth.instance.signOut();
+    await GoogleSignIn().signOut();
   }
 }
