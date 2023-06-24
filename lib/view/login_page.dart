@@ -16,13 +16,34 @@ class _LoginPageState extends State<LoginPage> {
     return SafeArea(
       child: Scaffold(
         body: Center(
-          child: Column(
-            children: [
-              SquareTile(
-                // onTap: () => AuthGoogle(),
-                imagePath: 'images/signin.png',
-              ),
-            ],
+          child: Padding(
+            padding: const EdgeInsets.all(40),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'images/applogo.png',
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  "Selamat datang di DocTalk Mobile",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.red,
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                const SquareTile(
+                  // onTap: () => AuthGoogle(),
+                  imagePath: 'images/signin.png',
+                ),
+              ],
+            ),
           ),
         ),
       ),
