@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../view/home_page.dart';
+import '../view/registration_page.dart';
 
 class AuthGoogle {
   // Google sign in
@@ -47,7 +48,7 @@ class AuthGoogle {
         // User does not exist, navigate to the registration page
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const RegistrationForm()),
+          MaterialPageRoute(builder: (context) => const RegistrationFormPage()),
         );
       }
     } catch (error) {
