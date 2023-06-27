@@ -71,7 +71,7 @@ class _RegistrationFormPageState extends State<RegistrationFormPage> {
       // ignore: use_build_context_synchronously
       await Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const HomePage()),
+        MaterialPageRoute(builder: (context) => HomePage()),
       );
     } catch (error) {
       // Handle any errors that occur during submission

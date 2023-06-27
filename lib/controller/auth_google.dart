@@ -42,7 +42,7 @@ class AuthGoogle {
         // User already exists, navigate to the home page
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const HomePage()),
+          MaterialPageRoute(builder: (context) => HomePage()),
         );
       } else {
         // User does not exist, navigate to the registration page

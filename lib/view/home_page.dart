@@ -1,3 +1,4 @@
+import 'package:chatapp/controller/friends_controller.dart';
 import 'package:chatapp/view/login_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +6,7 @@ import 'package:flutter/material.dart';
 import '../controller/auth_google.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -13,6 +14,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final TextEditingController _search = TextEditingController();
+  final FriendsController _friendsController = FriendsController();
   QuerySnapshot? _searchResults;
 
   void onSearch() async {
@@ -94,6 +96,10 @@ class _HomePageState extends State<HomePage> {
                   return ListTile(
                     title: Text(userData['displayName']),
                     subtitle: Text(userData['email']),
+                    trailing: ElevatedButton(
+                      onPressed: () {},
+                      child: Icon(Icons.group_add_sharp),
+                    ),
                   );
                 },
               ),
