@@ -1,9 +1,12 @@
-import 'package:chatapp/controller/friends_controller.dart';
+import 'package:chatapp/view/chat_room.dart';
 import 'package:chatapp/view/login_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../controller/auth_google.dart';
+
+//this before
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -14,28 +17,21 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final TextEditingController _search = TextEditingController();
-  final FriendsController _friendsController = FriendsController();
   QuerySnapshot? _searchResults;
 
   void onSearch() async {
-    FirebaseFirestore useraccount = FirebaseFirestore.instance;
+    FirebaseFirestore useraccount;
+    useraccount = FirebaseFirestore.instance;
+    FirebaseAuth account = FirebaseAuth.instance;
 
     QuerySnapshot searchSnapshot = await useraccount
         .collection('users')
         .where("email", isEqualTo: _search.text)
+        .where("email", isNotEqualTo: account.currentUser!.email)
         .get();
     setState(() {
       _searchResults = searchSnapshot;
     });
-  }
-
-  void addfriend(String uid) async {
-    // Get user data
-    final userData = await _friendsController.getUserData(uid);
-    if (userData != null) {
-      // Store user data as a friend
-      await _friendsController.storeUserDataAsFriend(uid);
-    }
   }
 
   @override
@@ -107,7 +103,11 @@ class _HomePageState extends State<HomePage> {
                     subtitle: Text(userData['email']),
                     trailing: ElevatedButton(
                       onPressed: () {
-                        addfriend(userData['uid']);
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => ChatroomPage(),
+                          ),
+                        );
                       },
                       child: Icon(Icons.group_add_sharp),
                     ),
