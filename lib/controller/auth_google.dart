@@ -32,7 +32,7 @@ class AuthGoogle {
           .get();
 
       // Store data in Firebase collection
-      await FirebaseFirestore.instance.collection('users').doc(user!.uid).set({
+      await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
         'uid': user.uid,
         'displayName': user.displayName,
         'email': user.email,
