@@ -29,6 +29,15 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void addfriend(String uid) async {
+    // Get user data
+    final userData = await _friendsController.getUserData(uid);
+    if (userData != null) {
+      // Store user data as a friend
+      await _friendsController.storeUserDataAsFriend(uid);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -97,7 +106,9 @@ class _HomePageState extends State<HomePage> {
                     title: Text(userData['displayName']),
                     subtitle: Text(userData['email']),
                     trailing: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        addfriend(userData['uid']);
+                      },
                       child: Icon(Icons.group_add_sharp),
                     ),
                   );

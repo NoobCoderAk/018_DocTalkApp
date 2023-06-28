@@ -20,6 +20,39 @@ class FriendsController {
     }
   }
 
+  // Increment user data in the "friends" collection
+  Future<void> incrementUserDataAsFriend(String friendId) async {
+    try {
+      final User? currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser == null) {
+        print('User not signed in.');
+        return;
+      }
+
+      final DocumentReference friendRef =
+          FirebaseFirestore.instance.collection('friends').doc(currentUser.uid);
+
+      // Check if the friend document exists
+      final DocumentSnapshot friendSnapshot = await friendRef.get();
+      if (!friendSnapshot.exists) {
+        print('Friend document not found.');
+        return;
+      }
+
+      // Increment the friend's data in the friends collection
+      final Map<String, dynamic> friendData =
+          friendSnapshot.data() as Map<String, dynamic>;
+      int friendCount =
+          friendData.containsKey(friendId) ? friendData[friendId] as int : 0;
+      friendData[friendId] = friendCount + 1;
+
+      await friendRef.set(friendData);
+      print('User data incremented as a friend.');
+    } catch (error, stackTrace) {
+      print('Error incrementing user data as a friend: $error\n$stackTrace');
+    }
+  }
+
   // Store user data in the "friends" collection
   Future<void> storeUserDataAsFriend(String uid) async {
     try {
