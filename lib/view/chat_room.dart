@@ -33,68 +33,66 @@ class _ChatroomPageState extends State<ChatroomPage> {
       ),
       body: Column(
         children: [
+          Expanded(
+            child: StreamBuilder<QuerySnapshot>(
+              stream: _chatController!.getChatStream(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                }
+
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+
+                final messages = snapshot.data!.docs;
+
+                return ListView.builder(
+                  // Display messages in ascending order
+                  reverse: false,
+                  itemCount: messages.length,
+                  itemBuilder: (context, index) {
+                    final message = messages[index];
+                    final messageData = message.data() as Map<String, dynamic>;
+                    final messageText = messageData['message'] ?? '';
+                    final isCurrentUser = messageData['userId'] == userId;
+
+                    return Align(
+                      alignment: isCurrentUser
+                          ? Alignment.centerRight
+                          : Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 8.0,
+                          horizontal: 16.0,
+                        ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: isCurrentUser ? Colors.blue : Colors.grey,
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            messageText,
+                            style: TextStyle(
+                              color:
+                                  isCurrentUser ? Colors.white : Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
               children: [
-                Expanded(
-                  child: StreamBuilder<QuerySnapshot>(
-                    stream: _chatController!.getChatStream(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasError) {
-                        return Text('Error: ${snapshot.error}');
-                      }
-
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-
-                      final messages = snapshot.data!.docs;
-
-                      return ListView.builder(
-                        reverse: false, // Display messages in ascending order
-                        itemCount: messages.length,
-                        itemBuilder: (context, index) {
-                          final message = messages[index];
-                          final messageData =
-                              message.data() as Map<String, dynamic>;
-                          final messageText = messageData['message'] ?? '';
-                          final isCurrentUser = messageData['userId'] == userId;
-
-                          return Align(
-                            alignment: isCurrentUser
-                                ? Alignment.centerRight
-                                : Alignment.centerLeft,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 8.0,
-                                horizontal: 16.0,
-                              ),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color:
-                                      isCurrentUser ? Colors.blue : Colors.grey,
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  messageText,
-                                  style: TextStyle(
-                                    color: isCurrentUser
-                                        ? Colors.white
-                                        : Colors.black,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      );
-                    },
-                  ),
-                ),
                 Expanded(
                   child: TextField(
                     controller: _messageController,
