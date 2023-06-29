@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, avoid_print
+
 import 'package:chatapp/controller/auth_google.dart';
 import 'package:chatapp/view/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -71,7 +73,7 @@ class _RegistrationFormPageState extends State<RegistrationFormPage> {
       // ignore: use_build_context_synchronously
       await Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+        MaterialPageRoute(builder: (context) => const HomePage()),
       );
     } catch (error) {
       // Handle any errors that occur during submission

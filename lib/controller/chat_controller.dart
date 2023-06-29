@@ -1,8 +1,11 @@
+// ignore_for_file: avoid_print
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatController {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  late CollectionReference _messagesRef = _firestore.collection('messages');
+  late final CollectionReference _messagesRef =
+      _firestore.collection('messages');
 
   void sendMessage(String userId, String message) async {
     try {

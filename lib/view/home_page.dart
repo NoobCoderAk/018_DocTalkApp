@@ -9,7 +9,7 @@ import '../controller/auth_google.dart';
 //this before
 
 class HomePage extends StatefulWidget {
-  HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -105,11 +105,11 @@ class _HomePageState extends State<HomePage> {
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => ChatroomPage(),
+                            builder: (context) => const ChatroomPage(),
                           ),
                         );
                       },
-                      child: Icon(Icons.group_add_sharp),
+                      child: const Icon(Icons.group_add_sharp),
                     ),
                   );
                 },
