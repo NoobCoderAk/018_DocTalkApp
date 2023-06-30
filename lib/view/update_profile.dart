@@ -1,15 +1,25 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class UpdateUserDataPage extends StatefulWidget {
+class UpdateProfile extends StatefulWidget {
+  const UpdateProfile(
+      {super.key,
+      required displayName,
+      required name,
+      required email,
+      required address,
+      required spesialisasi,
+      required license,
+      required bio});
+
   @override
-  _UpdateUserDataPageState createState() => _UpdateUserDataPageState();
+  _UpdateProfileState createState() => _UpdateProfileState();
 }
 
-class _UpdateUserDataPageState extends State<UpdateUserDataPage> {
+class _UpdateProfileState extends State<UpdateProfile> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
 

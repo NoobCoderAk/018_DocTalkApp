@@ -1,3 +1,4 @@
+import 'package:chatapp/view/update_profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,7 +13,7 @@ class ProfilePage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile'),
+        title: const Text('Profile'),
       ),
       body: ListView(
         children: [
@@ -30,13 +31,13 @@ class ProfilePage extends StatelessWidget {
               }
 
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               }
 
               if (!snapshot.hasData || !snapshot.data!.exists) {
-                return Center(
+                return const Center(
                   child: Text('No data available.'),
                 );
               }
@@ -94,10 +95,28 @@ class ProfilePage extends StatelessWidget {
                     color: Colors.amber,
                     child: Text('Bio: ${data['bio']}'),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 40,
                   ),
-                  ElevatedButton(onPressed: () {}, child: Text('Edit'))
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UpdateProfile(
+                            displayName: data['displayName'],
+                            name: data['name'],
+                            email: data['email'],
+                            address: data['address'],
+                            spesialisasi: data['spesialisasi'],
+                            license: data['license'],
+                            bio: data['bio'],
+                          ),
+                        ),
+                      );
+                    },
+                    child: const Text('Edit'),
+                  ),
                 ],
               );
             },
