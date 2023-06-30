@@ -1,5 +1,6 @@
 import 'package:chatapp/view/chat_room.dart';
 import 'package:chatapp/view/login_page.dart';
+import 'package:chatapp/view/profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +52,16 @@ class _HomePageState extends State<HomePage> {
                 );
               },
               icon: const Icon(Icons.logout),
-            )
+            ),
+            IconButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => ProfilePage(),
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.person))
           ],
         ),
         body: Column(
