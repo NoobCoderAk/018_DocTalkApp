@@ -1,5 +1,6 @@
 import 'package:chatapp/controller/auth_google.dart';
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 import 'utils/squaretile.dart';
 
@@ -15,28 +16,31 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: HexColor("#212A3E"),
         body: Center(
           child: Padding(
             padding: const EdgeInsets.all(40),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset(
-                  'images/applogo.png',
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
                 const Text(
-                  "Selamat datang di DocTalk Mobile",
+                  "Sign In",
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 28,
                     fontWeight: FontWeight.bold,
-                    color: Colors.red,
+                    color: Colors.white,
                   ),
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 40,
+                ),
+                Image.asset(
+                  'images/applogo.png',
+                  height: 200,
+                  width: 200,
+                ),
+                const SizedBox(
+                  height: 40,
                 ),
                 SquareTile(
                   onTap: () => AuthGoogle().signInWithGoogle(context),

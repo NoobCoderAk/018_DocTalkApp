@@ -4,6 +4,7 @@ import 'package:chatapp/view/profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 import '../controller/auth_google.dart';
 
@@ -39,9 +40,16 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: HexColor("#212A3E"),
         appBar: AppBar(
-          title: const Text('DocTalk App'),
-          backgroundColor: Colors.red,
+          title: Text(
+            'DocTalk App',
+            style: TextStyle(
+              color: HexColor("#ffffff"),
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          backgroundColor: HexColor("#212A3E"),
           actions: [
             IconButton(
               onPressed: () {
@@ -51,81 +59,104 @@ class _HomePageState extends State<HomePage> {
                   (Route<dynamic> route) => false,
                 );
               },
-              icon: const Icon(Icons.logout),
+              icon: Icon(Icons.logout),
+              color: HexColor("#ffffff"),
             ),
             IconButton(
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => ProfilePage(),
-                    ),
-                  );
-                },
-                icon: const Icon(Icons.person))
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const ProfilePage(),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.person),
+              color: HexColor("#ffffff"),
+            ),
           ],
         ),
-        body: Column(
-          children: [
-            const SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(right: 10),
-                  height: 50,
-                  alignment: Alignment.topCenter,
-                  child: Container(
-                    height: 50,
-                    width: 200,
-                    alignment: Alignment.center,
-                    child: TextField(
-                      controller: _search,
-                      textAlign: TextAlign.start,
-                      decoration: InputDecoration(
-                        hintText: "Cari",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
+        body: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 40,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Container(
+                      margin: const EdgeInsets.only(right: 10),
+                      height: 50,
+                      alignment: Alignment.topCenter,
+                      child: Container(
+                        height: 50,
+                        alignment: Alignment.center,
+                        child: TextField(
+                          controller: _search,
+                          textAlign: TextAlign.start,
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: HexColor("#394867"),
+                            hintText: "Cari",
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                ElevatedButton(
-                  onPressed: onSearch,
-                  child: const Text('Cari'),
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: _searchResults?.docs.length ?? 0,
-                itemBuilder: (context, index) {
-                  final userData = _searchResults?.docs[index].data()
-                      as Map<String, dynamic>;
-
-                  return ListTile(
-                    title: Text(userData['displayName']),
-                    subtitle: Text(userData['email']),
-                    trailing: ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const ChatroomPage(),
-                          ),
-                        );
-                      },
-                      child: const Icon(Icons.group_add_sharp),
+                  ElevatedButton(
+                    onPressed: onSearch,
+                    child: const Text(
+                      'Cari',
+                      style: TextStyle(),
                     ),
-                  );
-                },
+                  ),
+                ],
               ),
-            ),
-          ],
+              const SizedBox(
+                height: 20,
+              ),
+              Expanded(
+                child: Container(
+                  color: HexColor("#212A3E"),
+                  child: ListView.builder(
+                    itemCount: _searchResults?.docs.length ?? 0,
+                    itemBuilder: (context, index) {
+                      final userData = _searchResults?.docs[index].data()
+                          as Map<String, dynamic>;
+
+                      return ListTile(
+                        focusColor: Colors.blueAccent,
+                        title: Text(
+                          userData['displayName'] ?? '',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        subtitle: Text(
+                          userData['email'] ?? '',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        trailing: ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const ChatroomPage(),
+                              ),
+                            );
+                          },
+                          child: const Icon(Icons.group_add_sharp),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
