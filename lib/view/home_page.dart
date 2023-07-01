@@ -140,7 +140,7 @@ class _HomePageState extends State<HomePage> {
                           userData['email'] ?? '',
                           style: TextStyle(color: Colors.white),
                         ),
-                        trailing: ElevatedButton(
+                        trailing: IconButton(
                           onPressed: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
@@ -148,7 +148,8 @@ class _HomePageState extends State<HomePage> {
                               ),
                             );
                           },
-                          child: const Icon(Icons.group_add_sharp),
+                          icon: const Icon(Icons.chat_outlined),
+                          color: HexColor("#ffffff"),
                         ),
                       );
                     },
