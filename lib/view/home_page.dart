@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
                   (Route<dynamic> route) => false,
                 );
               },
-              icon: Icon(Icons.logout),
+              icon: const Icon(Icons.logout),
               color: HexColor("#ffffff"),
             ),
             IconButton(
@@ -94,6 +94,7 @@ class _HomePageState extends State<HomePage> {
                         height: 50,
                         alignment: Alignment.center,
                         child: TextField(
+                          style: TextStyle(color: HexColor("#ffffff")),
                           controller: _search,
                           textAlign: TextAlign.start,
                           decoration: InputDecoration(
@@ -134,11 +135,11 @@ class _HomePageState extends State<HomePage> {
                         focusColor: Colors.blueAccent,
                         title: Text(
                           userData['displayName'] ?? '',
-                          style: TextStyle(color: Colors.white),
+                          style: const TextStyle(color: Colors.white),
                         ),
                         subtitle: Text(
                           userData['email'] ?? '',
-                          style: TextStyle(color: Colors.white),
+                          style: const TextStyle(color: Colors.white),
                         ),
                         trailing: IconButton(
                           onPressed: () {

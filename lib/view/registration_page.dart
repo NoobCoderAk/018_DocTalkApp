@@ -53,7 +53,7 @@ class _RegistrationFormPageState extends State<RegistrationFormPage> {
           .doc(user.uid)
           .set({
         'uid': userId,
-        'name': name,
+        'description': name,
         'displayName': displayName,
         'email': email,
         'address': address,

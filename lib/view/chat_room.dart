@@ -4,6 +4,7 @@ import 'package:chatapp/controller/chat_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class ChatroomPage extends StatefulWidget {
   const ChatroomPage({super.key});
@@ -27,9 +28,19 @@ class _ChatroomPageState extends State<ChatroomPage> {
     final String userId = FirebaseAuth.instance.currentUser!.uid;
 
     return Scaffold(
+      backgroundColor: HexColor("#212A3E"),
       appBar: AppBar(
-        title: const Text('Chatroom'),
-        backgroundColor: Colors.red,
+        leading: BackButton(
+          color: HexColor("#ffffff"), // <-- SEE HERE
+        ),
+        title: Text(
+          'Chatroom',
+          style: TextStyle(
+            color: HexColor("#ffffff"),
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: HexColor("#27374D"),
       ),
       body: Column(
         children: [
@@ -70,7 +81,9 @@ class _ChatroomPageState extends State<ChatroomPage> {
                         ),
                         child: Container(
                           decoration: BoxDecoration(
-                            color: isCurrentUser ? Colors.blue : Colors.grey,
+                            color: isCurrentUser
+                                ? HexColor("#1C82AD")
+                                : HexColor("#86A3B8"),
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           padding: const EdgeInsets.all(8.0),

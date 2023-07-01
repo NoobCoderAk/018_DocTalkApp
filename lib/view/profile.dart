@@ -2,6 +2,7 @@ import 'package:chatapp/view/update_profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -12,8 +13,19 @@ class ProfilePage extends StatelessWidget {
     final String currentUserId = currentUser!.uid;
 
     return Scaffold(
+      backgroundColor: HexColor("#212A3E"),
       appBar: AppBar(
-        title: const Text('Profile'),
+        leading: BackButton(
+          color: HexColor("#ffffff"), // <-- SEE HERE
+        ),
+        title: Text(
+          'Profile',
+          style: TextStyle(
+            color: HexColor("#ffffff"),
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: HexColor("#27374D"),
       ),
       body: ListView(
         children: [
@@ -46,54 +58,124 @@ class ProfilePage extends StatelessWidget {
 
               return Column(
                 children: [
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    height: 40,
-                    width: 200,
-                    color: Colors.amber,
-                    child: Text('Nama Panggilan: ${data['displayName']}'),
+                  ListTile(
+                    // tileColor: Colors.red,
+                    title: Text(
+                      'Username:',
+                      style: TextStyle(
+                        color: HexColor("#ffffff"),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    subtitle: Text(
+                      '${data['displayName']}',
+                      style: TextStyle(
+                        color: HexColor("#ffffff"),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    height: 40,
-                    width: 200,
-                    color: Colors.amber,
-                    child: Text('Name: ${data['name']}'),
+                  ListTile(
+                    title: Text(
+                      'Nama Panjang',
+                      style: TextStyle(
+                        color: HexColor("#ffffff"),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    // tileColor: Colors.amber,
+                    subtitle: Text(
+                      'Name: ${data['name']}',
+                      style: TextStyle(
+                        color: HexColor("#ffffff"),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    height: 40,
-                    width: 200,
-                    color: Colors.amber,
-                    child: Text('Email: ${data['email']}'),
+                  ListTile(
+                    // tileColor: Colors.blue,
+                    title: Text(
+                      'Email: ',
+                      style: TextStyle(
+                        color: HexColor("#ffffff"),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    subtitle: Text(
+                      '${data['email']}',
+                      style: TextStyle(
+                        color: HexColor("#ffffff"),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    height: 40,
-                    width: 200,
-                    color: Colors.amber,
-                    child: Text('Alamat : ${data['address']}'),
+                  ListTile(
+                    // tileColor: Colors.green,
+                    title: Text(
+                      'Alamat:',
+                      style: TextStyle(
+                        color: HexColor("#ffffff"),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    subtitle: Text(
+                      '${data['address']}',
+                      style: TextStyle(
+                        color: HexColor("#ffffff"),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    height: 40,
-                    width: 200,
-                    color: Colors.amber,
-                    child: Text('Spesialisasi: ${data['spesialisasi']}'),
+                  ListTile(
+                    // tileColor: Colors.orange,
+                    title: Text(
+                      'Spesialisasi: ',
+                      style: TextStyle(
+                        color: HexColor("#ffffff"),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    subtitle: Text(
+                      '${data['spesialisasi']}',
+                      style: TextStyle(
+                        color: HexColor("#ffffff"),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    height: 40,
-                    width: 200,
-                    color: Colors.amber,
-                    child: Text('Lisensi: ${data['license']}'),
+                  ListTile(
+                    // tileColor: Colors.teal,
+                    title: Text(
+                      'Lisensi: ',
+                      style: TextStyle(
+                        color: HexColor("#ffffff"),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    subtitle: Text(
+                      'Lisensi: ${data['license']}',
+                      style: TextStyle(
+                        color: HexColor("#ffffff"),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    height: 40,
-                    width: 200,
-                    color: Colors.amber,
-                    child: Text('Bio: ${data['bio']}'),
+                  ListTile(
+                    // tileColor: Colors.amber,
+                    title: Text(
+                      'Bio:',
+                      style: TextStyle(
+                        color: HexColor("#ffffff"),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    subtitle: Text(
+                      '${data['bio']}',
+                      style: TextStyle(
+                        color: HexColor("#ffffff"),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                   const SizedBox(
                     height: 40,
