@@ -1,8 +1,8 @@
-// ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api
+// ignore_for_file: library_private_types_in_public_api
 
-import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:chatapp/controller/profile_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 class UpdateProfile extends StatefulWidget {
   final String? displayName;
@@ -29,6 +29,7 @@ class UpdateProfile extends StatefulWidget {
 }
 
 class _UpdateProfileState extends State<UpdateProfile> {
+  final ProfileController _controller = ProfileController();
   late TextEditingController _displayNameController;
   late TextEditingController _nameController;
   late TextEditingController _emailController;
@@ -36,6 +37,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
   late TextEditingController _spesialisasiController;
   late TextEditingController _lisensiController;
   late TextEditingController _bioController;
+
   @override
   void initState() {
     super.initState();
@@ -64,55 +66,17 @@ class _UpdateProfileState extends State<UpdateProfile> {
     final currentUser = FirebaseAuth.instance.currentUser;
     final currentUserId = currentUser!.uid;
 
-    try {
-      await FirebaseFirestore.instance
-          .collection('Registration Files')
-          .doc(currentUserId)
-          .update({
-        'displayName': _displayNameController.text,
-        'name': _nameController.text,
-        'email': _emailController.text,
-        'address': _addressController.text,
-        'spesialisasi': _spesialisasiController.text,
-        'license': _lisensiController.text,
-        'bio': _bioController.text,
-      });
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Success'),
-            content: const Text('User data updated successfully.'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
-    } catch (error) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Error'),
-            content: const Text('Failed to update user data.'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
-    }
+    _controller.updateUserData(
+      context,
+      currentUserId: currentUserId,
+      displayName: _displayNameController.text,
+      name: _nameController.text,
+      email: _emailController.text,
+      address: _addressController.text,
+      spesialisasi: _spesialisasiController.text,
+      license: _lisensiController.text,
+      bio: _bioController.text,
+    );
   }
 
   @override
@@ -126,10 +90,10 @@ class _UpdateProfileState extends State<UpdateProfile> {
         child: Column(
           children: [
             TextFormField(
-              enabled: true,
+              enabled: false,
               controller: _displayNameController,
               decoration: const InputDecoration(
-                labelText: 'Nama Panggilan',
+                labelText: 'Username',
               ),
             ),
             const SizedBox(height: 16.0),
@@ -180,6 +144,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
               onPressed: _updateUserData,
               child: const Text('Update'),
             ),
+            const SizedBox(height: 16.0),
           ],
         ),
       ),

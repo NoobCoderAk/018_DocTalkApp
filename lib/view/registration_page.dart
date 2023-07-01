@@ -1,10 +1,6 @@
-// ignore_for_file: library_private_types_in_public_api, avoid_print
-
-import 'package:chatapp/controller/auth_google.dart';
-import 'package:chatapp/view/home_page.dart';
+import 'package:chatapp/controller/profile_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RegistrationFormPage extends StatefulWidget {
   const RegistrationFormPage({Key? key}) : super(key: key);
@@ -14,8 +10,7 @@ class RegistrationFormPage extends StatefulWidget {
 }
 
 class _RegistrationFormPageState extends State<RegistrationFormPage> {
-  AuthGoogle authGoogle = AuthGoogle();
-
+  final ProfileController _controller = ProfileController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _spesialisasiController = TextEditingController();
@@ -32,7 +27,7 @@ class _RegistrationFormPageState extends State<RegistrationFormPage> {
     super.dispose();
   }
 
-  void _submitForm() async {
+  void _submitForm() {
     // Handle form submission
     String name = _nameController.text;
     String address = _addressController.text;
@@ -46,39 +41,17 @@ class _RegistrationFormPageState extends State<RegistrationFormPage> {
     final String displayName = user.displayName ?? '';
     final String email = user.email ?? '';
 
-    try {
-      // Store data in Firebase collection
-      await FirebaseFirestore.instance
-          .collection('Registration Files')
-          .doc(user.uid)
-          .set({
-        'uid': userId,
-        'description': name,
-        'displayName': displayName,
-        'email': email,
-        'address': address,
-        'spesialisasi': spesialisasi,
-        'license': license,
-        'bio': bio,
-      });
-
-      // // Reset the form after successful submission
-      _nameController.clear();
-      _addressController.clear();
-      _spesialisasiController.clear();
-      _licenseController.clear();
-      _bioController.clear();
-
-      // Navigate to the home page
-      // ignore: use_build_context_synchronously
-      await Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const HomePage()),
-      );
-    } catch (error) {
-      // Handle any errors that occur during submission
-      print('Error submitting form: $error');
-    }
+    _controller.submitForm(
+      context,
+      userId: userId,
+      displayName: displayName,
+      email: email,
+      name: name,
+      address: address,
+      spesialisasi: spesialisasi,
+      license: license,
+      bio: bio,
+    );
   }
 
   @override

@@ -1,16 +1,19 @@
-import 'package:chatapp/view/update_profile.dart';
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
+import 'package:chatapp/controller/profile_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+  const ProfilePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final currentUser = FirebaseAuth.instance.currentUser;
     final String currentUserId = currentUser!.uid;
+    final ProfileController _controller = ProfileController();
 
     return Scaffold(
       backgroundColor: HexColor("#212A3E"),
@@ -30,10 +33,7 @@ class ProfilePage extends StatelessWidget {
       body: ListView(
         children: [
           StreamBuilder<DocumentSnapshot>(
-            stream: FirebaseFirestore.instance
-                .collection('Registration Files')
-                .doc(currentUserId)
-                .snapshots(),
+            stream: _controller.getProfileData(currentUserId),
             builder: (BuildContext context,
                 AsyncSnapshot<DocumentSnapshot> snapshot) {
               if (snapshot.hasError) {
@@ -55,20 +55,60 @@ class ProfilePage extends StatelessWidget {
               }
 
               final data = snapshot.data!.data() as Map<String, dynamic>;
+              final String profilePictureUrl = currentUser.photoURL ?? '';
 
               return Column(
                 children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          // alignment: Alignment.center,
+                          // height: 60,
+                          // color: Colors.amber,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              CircleAvatar(
+                                backgroundImage: NetworkImage(
+                                  profilePictureUrl,
+                                ),
+                                radius: 40,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                '${data['displayName']}',
+                                style: TextStyle(
+                                  color: HexColor("#ffffff"),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 24,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   ListTile(
-                    // tileColor: Colors.red,
                     title: Text(
-                      'Username:',
+                      'Nama Panjang:',
                       style: TextStyle(
                         color: HexColor("#ffffff"),
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     subtitle: Text(
-                      '${data['displayName']}',
+                      '${data['name']}',
                       style: TextStyle(
                         color: HexColor("#ffffff"),
                         fontWeight: FontWeight.bold,
@@ -76,24 +116,6 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                   ListTile(
-                    title: Text(
-                      'Nama Panjang',
-                      style: TextStyle(
-                        color: HexColor("#ffffff"),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    // tileColor: Colors.amber,
-                    subtitle: Text(
-                      'Name: ${data['name']}',
-                      style: TextStyle(
-                        color: HexColor("#ffffff"),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  ListTile(
-                    // tileColor: Colors.blue,
                     title: Text(
                       'Email: ',
                       style: TextStyle(
@@ -110,7 +132,6 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                   ListTile(
-                    // tileColor: Colors.green,
                     title: Text(
                       'Alamat:',
                       style: TextStyle(
@@ -127,7 +148,6 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                   ListTile(
-                    // tileColor: Colors.orange,
                     title: Text(
                       'Spesialisasi: ',
                       style: TextStyle(
@@ -144,7 +164,6 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                   ListTile(
-                    // tileColor: Colors.teal,
                     title: Text(
                       'Lisensi: ',
                       style: TextStyle(
@@ -161,7 +180,6 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                   ListTile(
-                    // tileColor: Colors.amber,
                     title: Text(
                       'Bio:',
                       style: TextStyle(
@@ -178,26 +196,16 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: 40,
+                    height: 20,
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => UpdateProfile(
-                            displayName: data['displayName'],
-                            name: data['name'],
-                            email: data['email'],
-                            address: data['address'],
-                            spesialisasi: data['spesialisasi'],
-                            license: data['license'],
-                            bio: data['bio'],
-                          ),
-                        ),
-                      );
+                      _controller.navigateToUpdateProfile(context, data);
                     },
                     child: const Text('Edit'),
+                  ),
+                  const SizedBox(
+                    height: 20,
                   ),
                 ],
               );
