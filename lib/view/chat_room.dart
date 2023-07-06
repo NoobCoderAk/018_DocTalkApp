@@ -1,10 +1,11 @@
 // ignore_for_file: library_private_types_in_public_api
 
-import 'package:chatapp/controller/chat_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+
+import 'package:chatapp/controller/chat_controller.dart';
 
 class ChatroomPage extends StatefulWidget {
   const ChatroomPage({super.key});
@@ -23,14 +24,6 @@ class _ChatroomPageState extends State<ChatroomPage> {
     _chatController = ChatController();
   }
 
-  Future<void> _deleteMessage(String messageId) async {
-    try {
-      await _chatController!.deleteMessage(messageId);
-    } catch (error) {
-      print('Gagal menghapus pesan : $error');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final String userId = FirebaseAuth.instance.currentUser!.uid;
@@ -39,7 +32,7 @@ class _ChatroomPageState extends State<ChatroomPage> {
       backgroundColor: HexColor("#212A3E"),
       appBar: AppBar(
         leading: BackButton(
-          color: HexColor("#ffffff"), // <-- SEE HERE
+          color: HexColor("#ffffff"),
         ),
         title: Text(
           'Chatroom',
@@ -79,12 +72,13 @@ class _ChatroomPageState extends State<ChatroomPage> {
                     final isCurrentUser = messageData['userId'] == userId;
 
                     return Dismissible(
+                      //swipe for delete
                       key: Key(message.id),
                       background: Container(
                         color: Colors.red,
                         alignment: Alignment.centerRight,
-                        padding: EdgeInsets.only(right: 16),
-                        child: Icon(
+                        padding: const EdgeInsets.only(right: 16),
+                        child: const Icon(
                           Icons.delete,
                           color: Colors.white,
                         ),
@@ -94,10 +88,11 @@ class _ChatroomPageState extends State<ChatroomPage> {
                           : DismissDirection.none,
                       onDismissed: (direction) {
                         if (isCurrentUser) {
-                          _deleteMessage(message.id);
+                          _chatController!.deleteMessage(message.id);
                         }
                       },
                       child: Align(
+                        //align user chat position
                         alignment: isCurrentUser
                             ? Alignment.centerRight
                             : Alignment.centerLeft,
@@ -108,6 +103,7 @@ class _ChatroomPageState extends State<ChatroomPage> {
                           ),
                           child: Container(
                             decoration: BoxDecoration(
+                              // differentiate color for each user box color
                               color: isCurrentUser
                                   ? HexColor("#1C82AD")
                                   : HexColor("#86A3B8"),
@@ -117,6 +113,7 @@ class _ChatroomPageState extends State<ChatroomPage> {
                             child: Text(
                               messageText,
                               style: TextStyle(
+                                // differentiate color for each user test color
                                 color:
                                     isCurrentUser ? Colors.white : Colors.black,
                               ),

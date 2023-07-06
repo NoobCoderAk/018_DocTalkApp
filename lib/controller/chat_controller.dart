@@ -15,7 +15,7 @@ class ChatController {
         'timestamp': Timestamp.now(),
       });
     } catch (error) {
-      print('Error sending message: $error');
+      print('Gagal menyimpan perbaruan: $error');
       // Handle the error appropriately, e.g., show an error message
     }
   }
@@ -24,7 +24,7 @@ class ChatController {
     try {
       await _messagesRef.doc(messageId).delete();
     } catch (error) {
-      print('Error deleting message: $error');
+      print('Gagal Menghapus Pesan: $error');
       // Handle the error appropriately, e.g., show an error message
     }
   }
