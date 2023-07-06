@@ -2,6 +2,7 @@
 
 import 'package:chatapp/model/register_file_model.dart';
 import 'package:chatapp/view/home_page.dart';
+import 'package:chatapp/view/profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:chatapp/view/update_profile.dart';
@@ -49,7 +50,6 @@ class ProfileController {
           spesialisasi, license, bio);
 
       // Reset the form after successful submission
-      // ...
 
       // Navigate to the home page
       Navigator.pushReplacement(
@@ -96,6 +96,12 @@ class ProfileController {
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProfilePage(),
+                    ),
+                  );
                 },
                 child: const Text('OK'),
               ),

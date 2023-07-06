@@ -19,7 +19,7 @@ class ProfilePage extends StatelessWidget {
       backgroundColor: HexColor("#212A3E"),
       appBar: AppBar(
         leading: BackButton(
-          color: HexColor("#ffffff"), // <-- SEE HERE
+          color: HexColor("#ffffff"), 
         ),
         title: Text(
           'Profile',

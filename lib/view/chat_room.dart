@@ -23,6 +23,14 @@ class _ChatroomPageState extends State<ChatroomPage> {
     _chatController = ChatController();
   }
 
+  Future<void> _deleteMessage(String messageId) async {
+    try {
+      await _chatController!.deleteMessage(messageId);
+    } catch (error) {
+      print('Gagal menghapus pesan : $error');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final String userId = FirebaseAuth.instance.currentUser!.uid;
@@ -70,28 +78,48 @@ class _ChatroomPageState extends State<ChatroomPage> {
                     final messageText = messageData['message'] ?? '';
                     final isCurrentUser = messageData['userId'] == userId;
 
-                    return Align(
-                      alignment: isCurrentUser
-                          ? Alignment.centerRight
-                          : Alignment.centerLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 8.0,
-                          horizontal: 16.0,
+                    return Dismissible(
+                      key: Key(message.id),
+                      background: Container(
+                        color: Colors.red,
+                        alignment: Alignment.centerRight,
+                        padding: EdgeInsets.only(right: 16),
+                        child: Icon(
+                          Icons.delete,
+                          color: Colors.white,
                         ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: isCurrentUser
-                                ? HexColor("#1C82AD")
-                                : HexColor("#86A3B8"),
-                            borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      direction: isCurrentUser
+                          ? DismissDirection.endToStart
+                          : DismissDirection.none,
+                      onDismissed: (direction) {
+                        if (isCurrentUser) {
+                          _deleteMessage(message.id);
+                        }
+                      },
+                      child: Align(
+                        alignment: isCurrentUser
+                            ? Alignment.centerRight
+                            : Alignment.centerLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 8.0,
+                            horizontal: 16.0,
                           ),
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            messageText,
-                            style: TextStyle(
-                              color:
-                                  isCurrentUser ? Colors.white : Colors.black,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: isCurrentUser
+                                  ? HexColor("#1C82AD")
+                                  : HexColor("#86A3B8"),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              messageText,
+                              style: TextStyle(
+                                color:
+                                    isCurrentUser ? Colors.white : Colors.black,
+                              ),
                             ),
                           ),
                         ),
