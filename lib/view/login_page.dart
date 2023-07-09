@@ -18,35 +18,37 @@ class _LoginPageState extends State<LoginPage> {
       child: Scaffold(
         backgroundColor: HexColor("#212A3E"),
         body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(40),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  "Sign In",
-                  style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(40),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "Sign In",
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 40,
-                ),
-                Image.asset(
-                  'images/applogo.png',
-                  height: 200,
-                  width: 200,
-                ),
-                const SizedBox(
-                  height: 40,
-                ),
-                SquareTile(
-                  onTap: () => AuthGoogle().signInWithGoogle(context),
-                  imagePath: 'images/signin.png',
-                ),
-              ],
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  Image.asset(
+                    'images/applogo.png',
+                    height: 200,
+                    width: 200,
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  SquareTile(
+                    onTap: () => AuthGoogle().signInWithGoogle(context),
+                    imagePath: 'images/signin.png',
+                  ),
+                ],
+              ),
             ),
           ),
         ),

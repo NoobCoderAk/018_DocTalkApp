@@ -19,7 +19,7 @@ class ProfilePage extends StatelessWidget {
       backgroundColor: HexColor("#212A3E"),
       appBar: AppBar(
         leading: BackButton(
-          color: HexColor("#ffffff"), 
+          color: HexColor("#ffffff"),
         ),
         title: Text(
           'Profile',
@@ -172,7 +172,7 @@ class ProfilePage extends StatelessWidget {
                       ),
                     ),
                     subtitle: Text(
-                      'Lisensi: ${data['license']}',
+                      '${data['license']}',
                       style: TextStyle(
                         color: HexColor("#ffffff"),
                         fontWeight: FontWeight.bold,

@@ -62,50 +62,52 @@ class _RegistrationFormPageState extends State<RegistrationFormPage> {
       appBar: AppBar(
         title: const Text('Registration Form'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextFormField(
-              controller: _nameController,
-              decoration: const InputDecoration(
-                labelText: 'Nama Lengkap',
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              TextFormField(
+                controller: _nameController,
+                decoration: const InputDecoration(
+                  labelText: 'Nama Lengkap',
+                ),
               ),
-            ),
-            const SizedBox(height: 16.0),
-            TextFormField(
-              controller: _addressController,
-              decoration: const InputDecoration(
-                labelText: 'Alamat',
+              const SizedBox(height: 16.0),
+              TextFormField(
+                controller: _addressController,
+                decoration: const InputDecoration(
+                  labelText: 'Alamat',
+                ),
               ),
-            ),
-            const SizedBox(height: 16.0),
-            TextFormField(
-              controller: _spesialisasiController,
-              decoration: const InputDecoration(
-                labelText: 'Spesialisasi',
+              const SizedBox(height: 16.0),
+              TextFormField(
+                controller: _spesialisasiController,
+                decoration: const InputDecoration(
+                  labelText: 'Spesialisasi',
+                ),
               ),
-            ),
-            const SizedBox(height: 16.0),
-            TextFormField(
-              controller: _licenseController,
-              decoration: const InputDecoration(
-                labelText: 'Surat Izin Praktek',
+              const SizedBox(height: 16.0),
+              TextFormField(
+                controller: _licenseController,
+                decoration: const InputDecoration(
+                  labelText: 'Surat Izin Praktek',
+                ),
               ),
-            ),
-            const SizedBox(height: 16.0),
-            TextFormField(
-              controller: _bioController,
-              decoration: const InputDecoration(
-                labelText: 'Bio',
+              const SizedBox(height: 16.0),
+              TextFormField(
+                controller: _bioController,
+                decoration: const InputDecoration(
+                  labelText: 'Bio',
+                ),
               ),
-            ),
-            const SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: _submitForm,
-              child: const Text('Submit'),
-            ),
-          ],
+              const SizedBox(height: 16.0),
+              ElevatedButton(
+                onPressed: _submitForm,
+                child: const Text('Submit'),
+              ),
+            ],
+          ),
         ),
       ),
     );

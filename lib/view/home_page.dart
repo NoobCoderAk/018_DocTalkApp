@@ -8,8 +8,6 @@ import 'package:hexcolor/hexcolor.dart';
 
 import '../controller/auth_google.dart';
 
-//this before
-
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -101,6 +99,7 @@ class _HomePageState extends State<HomePage> {
                             filled: true,
                             fillColor: HexColor("#394867"),
                             hintText: "Cari",
+                            hintStyle: TextStyle(color: HexColor("#ffffff")),
                             border: OutlineInputBorder(
                               borderSide: BorderSide.none,
                               borderRadius: BorderRadius.circular(20),
@@ -132,7 +131,7 @@ class _HomePageState extends State<HomePage> {
                           as Map<String, dynamic>;
 
                       return ListTile(
-                        focusColor: Colors.blueAccent,
+                        // focusColor: Colors.blueAccent,
                         title: Text(
                           userData['displayName'] ?? '',
                           style: const TextStyle(color: Colors.white),

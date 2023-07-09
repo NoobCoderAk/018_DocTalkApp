@@ -50,6 +50,7 @@ class ProfileController {
           spesialisasi, license, bio);
 
       // Reset the form after successful submission
+      // ...
 
       // Navigate to the home page
       Navigator.pushReplacement(
@@ -99,7 +100,7 @@ class ProfileController {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ProfilePage(),
+                      builder: (context) => const ProfilePage(),
                     ),
                   );
                 },
